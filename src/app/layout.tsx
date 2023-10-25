@@ -16,11 +16,8 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR">
-      <body className={`${roboto.className} flex`}>
-        <AsideMenu/>
-        <main className='flex flex-col flex-1 p-6 overflow-auto max-h-screen'>
-          {children}
-        </main>
+      <body className={`${roboto.className}`}>
+        {children}
       </body>
     </html>
   )

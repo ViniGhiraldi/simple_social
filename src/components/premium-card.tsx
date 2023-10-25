@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader } from "./ui/card";
 
 export const PremiumCard = () => {
     return(
-        <Card className='flex w-80 bg-primary overflow-hidden'>
+        <Card className='flex w-80 bg-gradient-to-br from-primary from-30% to-secondary-foreground overflow-hidden'>
             <div>
                 <CardHeader>
                     <h1 className='text-2xl leading-6 text-card'>Teste o Premium sem pagar nada!</h1>
@@ -13,8 +13,6 @@ export const PremiumCard = () => {
                     <Button variant='secondary'>Testar Agora</Button>
                 </CardContent>
             </div>
-            <CardContent className='flex items-end justify-center py-0 bg-gradient-to-b from-transparent to-secondary-foreground/80'>
-            </CardContent>
         </Card>
     );
 }

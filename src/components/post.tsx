@@ -8,7 +8,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { forwardRef } from "react";
 import { cn } from "@/lib/utils";
-import { IUsuario } from "@/models/Usuario";
+import { IUsuario } from "@/models/usuario";
 
 const IconButton = forwardRef<
   HTMLButtonElement,
