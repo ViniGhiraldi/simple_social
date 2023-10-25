@@ -68,21 +68,21 @@ export const AsideMenu = () => {
                     <button className='absolute right-2 text-primary'><Search /></button>
                 </div>
                 <nav className=''>
-                    <ul className='border rounded-md bg-background shadow'>
+                    <ul className='border rounded-md bg-background shadow overflow-hidden'>
                         <ButtonLink href="/" text="Início" isSelected={pathCompare('/')}>
-                            <Home filled={pathCompare('/')} />
+                            <Home filled={pathCompare('/')}/>
                         </ButtonLink>
                         <ButtonLink href="/following" text="Seguindo" isSelected={pathCompare('/following')}>
-                            <People filled={pathCompare('/following')} />
+                            <People filled={pathCompare('/following')}/>
                         </ButtonLink>
                         <ButtonLink href="/notifications" text="Notificações" isSelected={pathCompare('/notifications')}>
-                            <Notification filled={pathCompare('/notifications')} />
+                            <Notification filled={pathCompare('/notifications')}/>
                         </ButtonLink>
                         <ButtonLink href="/my" text="Meu Perfil" isSelected={pathCompare('/my')}>
-                            <User filled={pathCompare('/my')} />
+                            <User filled={pathCompare('/my')}/>
                         </ButtonLink>
                         <ButtonLink href="/premium" text="Premium" isSelected={pathCompare('/premium')}>
-                            <Star filled={pathCompare('/premium')} />
+                            <Star filled={pathCompare('/premium')}/>
                         </ButtonLink>
                     </ul>
                 </nav>
