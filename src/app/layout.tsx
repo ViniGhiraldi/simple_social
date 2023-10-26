@@ -1,4 +1,3 @@
-import { AsideMenu } from '@/components/aside-menu'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
