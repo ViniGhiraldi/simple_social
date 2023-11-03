@@ -40,7 +40,7 @@ export const AsideMenu = () => {
     return (
         <aside className='w-72 h-screen border-r flex flex-col justify-between'>
             <div className='p-6 flex flex-col gap-6 overflow-y-auto scrollbar-hide flex-1'>
-                <Link href='/home'>
+                <Link href='/'>
                     <Image src='/logo.svg' alt='Simple Social logo' width={75} height={75} />
                 </Link>
                 <Separator orientation='horizontal' />
@@ -69,8 +69,8 @@ export const AsideMenu = () => {
                 </div>
                 <nav className=''>
                     <ul className='border rounded-md bg-background shadow overflow-hidden'>
-                        <ButtonLink href="/home" text="Início" isSelected={pathCompare('/home')}>
-                            <Home filled={pathCompare('/home')}/>
+                        <ButtonLink href="/" text="Início" isSelected={pathCompare('/')}>
+                            <Home filled={pathCompare('/')}/>
                         </ButtonLink>
                         <ButtonLink href="/following" text="Seguindo" isSelected={pathCompare('/following')}>
                             <People filled={pathCompare('/following')}/>
