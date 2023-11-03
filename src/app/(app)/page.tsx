@@ -2,7 +2,9 @@ import { NewPost } from "@/components/new-post";
 import { Post } from "@/components/post";
 import { PremiumCard } from "@/components/premium-card";
 
-export default function Home() {
+export default async function Home() {
+  /* const feed = await fetch('http://localhost:3333/feed') */
+
   return (
     <div className='flex flex-col gap-6'>
       <NewPost/>

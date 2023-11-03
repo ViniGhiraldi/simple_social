@@ -4,13 +4,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { Separator } from "./ui/separator";
 import { Input } from "./ui/input";
-import { Home, MoreCircle, Notification, People, Search, Setting, Star, User } from "react-iconly";
+import { Home, Logout, MoreCircle, Notification, People, Search, Setting, Star, User } from "react-iconly";
 import { Li } from "./ui/li";
 import { Card, CardContent, CardHeader } from "./ui/card";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { useCallback } from "react";
 import { usePathname } from 'next/navigation';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import { signOut } from "next-auth/react";
 
 interface ButtonLinkProps {
     children?: React.ReactNode;
@@ -88,10 +90,26 @@ export const AsideMenu = () => {
                 </nav>
             </div>
             <div className='pt-2 bg-background'>
-                <Button className="p-6 text-base w-full gap-6 justify-start rounded-none">
+                {/* <Button className="p-6 text-base w-full gap-6 justify-start rounded-none">
                     <Setting filled />
                     <span>Opções</span>
-                </Button>
+                </Button> */}
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild className="w-full">
+                        <Button className="w-full p-6 text-base gap-6 justify-start rounded-none">
+                            <Setting filled />
+                            <span>Opções</span>
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-60">
+                        <DropdownMenuLabel>Opções</DropdownMenuLabel>
+                        <DropdownMenuSeparator/>
+                        <DropdownMenuItem className="flex gap-6" onClick={async () => await signOut()}>
+                            <Logout/>
+                            <span>Sair</span>
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
             </div>
         </aside>
     );
