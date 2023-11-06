@@ -8,7 +8,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { forwardRef } from "react";
 import { cn } from "@/lib/utils";
-import { IUsuario } from "@/models/usuario";
+import { IUsuarioForPost } from "@/models/post";
 
 const IconButton = forwardRef<
   HTMLButtonElement,
@@ -29,7 +29,7 @@ const IconButton = forwardRef<
 interface PostProps{
     text: string;
     media?: string;
-    user: IUsuario
+    user: IUsuarioForPost
 }
 
 export const Post = ({ text, media, user }: PostProps) => {
@@ -41,7 +41,7 @@ export const Post = ({ text, media, user }: PostProps) => {
                 </Avatar>
                 <div className='flex flex-col leading-4'>
                     <p>{user.nickname}</p>
-                    <small className='text-muted-foreground tracking-wider'>{user.username}</small>
+                    <small className='text-muted-foreground tracking-wider'>@{user.username}</small>
                 </div>
             </CardHeader>
             <CardContent className='pb-2 px-4'>

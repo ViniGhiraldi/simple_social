@@ -12,7 +12,7 @@ import { Button } from "./ui/button";
 import { useCallback } from "react";
 import { usePathname } from 'next/navigation';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 interface ButtonLinkProps {
     children?: React.ReactNode;
@@ -33,6 +33,7 @@ const ButtonLink = ({ isSelected, children, text, href }: ButtonLinkProps) => {
 }
 
 export const AsideMenu = () => {
+    const { data: session } = useSession();
     const pathname = usePathname()
 
     const pathCompare = useCallback((href: string) => {
@@ -56,8 +57,8 @@ export const AsideMenu = () => {
                                 <AvatarImage src='https://github.com/shadcn.png' />
                             </Avatar>
                             <div className="">
-                                <span className="text-sm">Name</span>
-                                <p className="text-muted-foreground text-xs leading-2 tracking-wider">@user</p>
+                                <span className="text-sm">{session?.user?.nickname}</span>
+                                <p className="text-muted-foreground text-xs leading-2 tracking-wider">@{session?.user?.username}</p>
                             </div>
                         </div>
                         <button className='mt-1 text-primary hover:scale-105'>

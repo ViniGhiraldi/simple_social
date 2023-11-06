@@ -67,7 +67,7 @@ export const LoginForm = () => {
                             <FormControl>
                                 <Input {...field}/>
                             </FormControl>
-                            <FormMessage/>
+                            <FormMessage />
                         </FormItem>
                     )}
                 />
