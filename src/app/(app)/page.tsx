@@ -3,10 +3,11 @@ import { PremiumCard } from "@/components/premium-card";
 import { getServerSession } from "next-auth";
 import { nextAuthOptions } from "../api/auth/[...nextauth]/route";
 import { Feed } from "@/components/feed";
+import { parseCookies } from "nookies";
 
 export default async function Home() {
-  const session = await getServerSession(nextAuthOptions);
-  console.log(session)
+  /* const {'simplesocial.accessToken': accessToken} = parseCookies();
+  console.log({accessToken}) */
 
   return (
     <div className='flex flex-col gap-6'>

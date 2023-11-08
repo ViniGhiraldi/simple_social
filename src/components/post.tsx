@@ -9,6 +9,7 @@ import { Button } from "./ui/button";
 import { forwardRef } from "react";
 import { cn } from "@/lib/utils";
 import { IUsuarioForPost } from "@/models/post";
+import { useSession } from "next-auth/react";
 
 const IconButton = forwardRef<
   HTMLButtonElement,
@@ -33,6 +34,12 @@ interface PostProps{
 }
 
 export const Post = ({ text, media, user }: PostProps) => {
+    const { data: session } = useSession();
+
+    const handleLike = () => {
+        alert(session?.user?.username)
+    }
+
     return(
         <Card className='w-[32rem]'>
             <CardHeader className='flex-row gap-4 p-4'>
@@ -54,7 +61,7 @@ export const Post = ({ text, media, user }: PostProps) => {
             )}
             <CardContent className='py-2 px-4 flex justify-between'>
                 <div className='flex gap-4'>
-                    <IconButton><Heart/></IconButton>
+                    <IconButton onClick={handleLike}><Heart/></IconButton>
                     <IconButton><Send/></IconButton>
                 </div>
                 <IconButton><Bookmark/></IconButton>

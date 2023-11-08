@@ -1,6 +1,7 @@
-import NextAuth, { NextAuthOptions } from 'next-auth';
+import NextAuth, { NextAuthOptions, User } from 'next-auth';
 import { setCookie } from 'nookies';
 import Credentials from 'next-auth/providers/credentials';
+import { Axios } from '@/lib/axios';
 
 export const nextAuthOptions: NextAuthOptions = {
     providers: [
@@ -11,27 +12,19 @@ export const nextAuthOptions: NextAuthOptions = {
                 password: { label: 'Senha', type: 'password' }
             },
             async authorize(credentials, req) {
-                const response = await fetch('http://localhost:3333/signin', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        uniquekey: credentials?.uniquekey,
-                        password: credentials?.password
-                    })
+                interface IResponse {
+                    accessToken: string;
+                    refreshToken: string;
+                    user: User
+                }
+
+                const response = await Axios.post<IResponse>('http://localhost:3333/signin', {
+                    uniquekey: credentials?.uniquekey,
+                    password: credentials?.password
                 })
 
-                const user = await response.json();
-
-                if(user){
-                    setCookie(undefined, 'simplesocial.accessToken', user.accessToken, {
-                        maxAge: 60 * 60 * 1 // 1 hour
-                    })
-                    setCookie(undefined, 'simplesocial.refreshToken', user.refreshToken, {
-                        maxAge: 60 * 60 * 48 // 48 hours
-                    })
-                    return user.user;
+                if(response.status === 202 || response.status === 200){
+                    return response.data.user
                 }
 
                 return null;
