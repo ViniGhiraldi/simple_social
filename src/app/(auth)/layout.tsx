@@ -1,6 +1,7 @@
 import { Metadata } from "next"
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import { nextAuthOptions } from "../api/auth/[...nextauth]/route";
 
 export const metadata: Metadata = {
     title: 'Simple Social',
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
 }
 
 export default async function AuthLayout({ children }: { children: React.ReactNode }) {
-    const session = await getServerSession();
+    const session = await getServerSession(nextAuthOptions);
 
     if(session) return redirect('/');
 

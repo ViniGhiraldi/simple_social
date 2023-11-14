@@ -6,8 +6,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { setCookie } from "nookies";
+import { useEffect } from "react";
 
 const formSchema = z.object({
     uniquekey: z.string(),
@@ -15,7 +17,24 @@ const formSchema = z.object({
 })
 
 export const LoginForm = () => {
+    const { data: session } = useSession();
     const router = useRouter();
+
+    useEffect(() => {
+        if(session?.user){
+            setCookie(undefined, 'simplesocial.accessToken', session.user.accessToken, {
+                maxAge: 60 * 60 * 1, // 1 hour
+                path: '/'
+            })
+
+            setCookie(undefined, 'simplesocial.refreshToken', session.user.refreshToken, {
+                maxAge: 60 * 60 * 48, // 48 hours
+                path: '/'
+            })
+
+            router.replace('/')
+        }
+    }, [session])
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -38,8 +57,6 @@ export const LoginForm = () => {
             console.log(result);
             return;
         }
-
-        router.replace('/');
     }
 
     return(

@@ -8,6 +8,8 @@ declare module "next-auth" {
     profilePicture: JSON;
     description: string;
     banner: JSON;
+    accessToken: string;
+    refreshToken: string;
   }
 
   interface Session extends DefaultSession {
