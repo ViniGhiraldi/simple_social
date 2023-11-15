@@ -51,14 +51,14 @@ export const AsideMenu = () => {
                     <CardHeader className="p-0">
                         <img src='https://marketplace.canva.com/EAE2cQaUHVA/1/0/1600w/canva-black-minimal-motivation-quote-linkedin-banner-HoRi-2buBWk.jpg' className="aspect-quarter" alt='wec' draggable={false} />
                     </CardHeader>
-                    <CardContent className="flex justify-between items-start px-2 pb-2">
+                    <CardContent className="flex justify-between items-start gap-2 px-2 pb-2">
                         <div className="flex gap-2 items-start">
                             <Avatar className="-translate-y-1/2">
-                                <AvatarImage src='https://github.com/shadcn.png' />
+                                <AvatarImage src={session?.user?.profilePicture} />
                             </Avatar>
                             <div className="">
-                                <span className="text-sm">{session?.user?.nickname}</span>
-                                <p className="text-muted-foreground text-xs leading-2 tracking-wider">@{session?.user?.username}</p>
+                                <span className="text-sm line-clamp-1">{session?.user?.nickname}</span>
+                                <p className="text-muted-foreground text-xs leading-2 tracking-wider w-32 overflow-hidden py-1 text-ellipsis">@{session?.user?.username}</p>
                             </div>
                         </div>
                         <button className='mt-1 text-primary hover:scale-105'>

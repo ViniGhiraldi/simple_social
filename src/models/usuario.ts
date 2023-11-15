@@ -2,7 +2,7 @@ export interface IUsuario{
     username: string;
     nickname: string;
     email: string;
-    profile_picture: string;
+    profilePicture?: string;
     banner?: string;
     description?: string;
 }

@@ -7,6 +7,7 @@ import { Avatar, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { forwardRef } from "react";
 import { cn } from "@/lib/utils";
+import { useSession } from "next-auth/react";
 
 const LiButton = forwardRef<
   HTMLButtonElement,
@@ -25,11 +26,13 @@ const LiButton = forwardRef<
 ))
 
 export const NewPost = () => {
+    const { data: session } = useSession();
+
     return(
         <Card className='overflow-hidden'>
             <CardHeader className='flex-row gap-2 p-4'>
             <Avatar>
-                <AvatarImage src='https://github.com/shadcn.png'/>
+                <AvatarImage src={session?.user?.profilePicture}/>
             </Avatar>
             <Textarea className='resize-none border-none shadow-none focus-visible:ring-0 text-base leading-4' placeholder='No que você está pensando?'/>
             </CardHeader>

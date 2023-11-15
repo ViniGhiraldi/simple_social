@@ -4,11 +4,12 @@ import { AxiosError } from "axios";
 
 interface IGetFeed{
     username: string;
+    onlyfriends?: boolean
 }
 
-export const getFeed = async ({username}: IGetFeed) => {
+export const getFeed = async ({username, onlyfriends = false}: IGetFeed) => {
     try {
-        const { data } = await Axios.get<{data: IPost[]}>(`/feed/${username}`);
+        const { data } = await Axios.get<{data: IPost[]}>(`/feed/${username}?onlyfriends=${onlyfriends}`);
         
         return data.data;
     } catch (error) {

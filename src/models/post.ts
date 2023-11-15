@@ -6,7 +6,7 @@ export interface IUsuarioForPost extends Omit<IUsuario, 'email' & 'banner' & 'de
 
 export interface IPost{
     id: number;
-    media?: JSON;
+    media?: string;
     title: string;
     userId: string;
     createdAt: Date;

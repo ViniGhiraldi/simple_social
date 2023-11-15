@@ -44,7 +44,7 @@ export const Post = ({ text, media, user }: PostProps) => {
         <Card className='w-[32rem]'>
             <CardHeader className='flex-row gap-4 p-4'>
                 <Avatar>
-                    <AvatarImage src={user.profile_picture}/>
+                    <AvatarImage src={user.profilePicture}/>
                 </Avatar>
                 <div className='flex flex-col leading-4'>
                     <p>{user.nickname}</p>
@@ -69,9 +69,9 @@ export const Post = ({ text, media, user }: PostProps) => {
             <Separator orientation='horizontal'/>
             <CardFooter className='p-4 pt-2 gap-4'>
                 <Avatar>
-                    <AvatarImage src={user.profile_picture}/>
+                    <AvatarImage src={session?.user?.profilePicture}/>
                 </Avatar>
-                <Input type='text' className='rounded-full bg-input' placeholder='Comente algo...'/>
+                <Input type='text' className='rounded-full bg-input shadow-inner' placeholder='Comente algo...'/>
                 <Button className='p-0 hover:scale-105' variant='link'><Send filled/></Button>
             </CardFooter>
         </Card>

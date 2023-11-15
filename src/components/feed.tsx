@@ -30,6 +30,7 @@ export const Feed = () => {
                     <Post
                         user={post.user}
                         text={post.title}
+                        media={post.media}
                     />
                 </li>
             ))}

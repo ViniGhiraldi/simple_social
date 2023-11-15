@@ -5,9 +5,9 @@ declare module "next-auth" {
     username: string;
     nickname: string;
     email: string;
-    profilePicture: JSON;
-    description: string;
-    banner: JSON;
+    profilePicture?: string;
+    description?: string;
+    banner?: string;
     accessToken: string;
     refreshToken: string;
   }
