@@ -4,7 +4,7 @@ import { IPost } from "@/models/post";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { Post } from "./post";
-import { getFeed } from "@/services/api/posts/getFeed";
+import { getFeed } from "@/services/api/posts/get-feed";
 
 export const Feed = () => {
     const { data: session } = useSession();

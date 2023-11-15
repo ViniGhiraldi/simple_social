@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import Image from "next/image";
-import { LoginForm } from "./components/loginForm";
+import { LoginForm } from "./components/login-form";
 
 export default async function Login() {
   return (

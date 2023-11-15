@@ -1,4 +1,4 @@
-import { AsideMenu } from "@/components/aside-menu";
+import { AsideMenu } from "@/components/aside-menu/aside-menu";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";

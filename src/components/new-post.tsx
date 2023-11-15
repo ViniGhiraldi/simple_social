@@ -3,7 +3,7 @@
 import { Image2, Send, Plus } from "react-iconly";
 import { Card, CardHeader } from "./ui/card";
 import { Textarea } from "./ui/textarea";
-import { Avatar, AvatarImage } from "./ui/avatar";
+import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { forwardRef } from "react";
 import { cn } from "@/lib/utils";
@@ -33,6 +33,7 @@ export const NewPost = () => {
             <CardHeader className='flex-row gap-2 p-4'>
             <Avatar>
                 <AvatarImage src={session?.user?.profilePicture}/>
+                <AvatarFallback className="uppercase">{session?.user?.username.substring(0,2)}</AvatarFallback>
             </Avatar>
             <Textarea className='resize-none border-none shadow-none focus-visible:ring-0 text-base leading-4' placeholder='No que você está pensando?'/>
             </CardHeader>

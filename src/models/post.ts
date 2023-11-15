@@ -1,5 +1,5 @@
-import { IPostComment } from "./postComment";
-import { IPostUsersOptions } from "./postUsersOptions";
+import { IPostComment } from "./post-comment";
+import { IPostUsersOptions } from "./post-users-options";
 import { IUsuario } from "./usuario";
 
 export interface IUsuarioForPost extends Omit<IUsuario, 'email' & 'banner' & 'description'>{}

@@ -1,6 +1,6 @@
 'use client'
 
-import NextAuthSessionProvider from '@/providers/sessionProvider'
+import NextAuthSessionProvider from '@/providers/session-provider'
 import './globals.css'
 import { Roboto } from 'next/font/google'
 

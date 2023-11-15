@@ -2,16 +2,16 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Separator } from "./ui/separator";
-import { Input } from "./ui/input";
+import { Separator } from "../ui/separator";
+import { Input } from "../ui/input";
 import { Home, Logout, MoreCircle, Notification, People, Search, Setting, Star, User } from "react-iconly";
-import { Li } from "./ui/li";
-import { Card, CardContent, CardHeader } from "./ui/card";
-import { Avatar, AvatarImage } from "./ui/avatar";
-import { Button } from "./ui/button";
+import { Li } from "../ui/li";
+import { Card, CardContent, CardHeader } from "../ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Button } from "../ui/button";
 import { useCallback } from "react";
 import { usePathname } from 'next/navigation';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { signOut, useSession } from "next-auth/react";
 
 interface ButtonLinkProps {
@@ -48,13 +48,16 @@ export const AsideMenu = () => {
                 </Link>
                 <Separator orientation='horizontal' />
                 <Card className='overflow-hidden shrink-0 bg-card text-card-foreground'>
-                    <CardHeader className="p-0">
-                        <img src='https://marketplace.canva.com/EAE2cQaUHVA/1/0/1600w/canva-black-minimal-motivation-quote-linkedin-banner-HoRi-2buBWk.jpg' className="aspect-quarter" alt='wec' draggable={false} />
-                    </CardHeader>
-                    <CardContent className="flex justify-between items-start gap-2 px-2 pb-2">
+                    {!!session?.user?.banner && (
+                        <CardHeader className="p-0">
+                            <img src={session?.user?.banner} className="aspect-quarter" draggable={false} />
+                        </CardHeader>
+                    )}
+                    <CardContent data-banner={!!session?.user?.banner} className="flex justify-between items-start gap-2 px-2 py-2 data-[banner=true]:pt-0">
                         <div className="flex gap-2 items-start">
-                            <Avatar className="-translate-y-1/2">
+                            <Avatar data-banner={!!session?.user?.banner} className="data-[banner=true]:-translate-y-1/2">
                                 <AvatarImage src={session?.user?.profilePicture} />
+                                <AvatarFallback className="uppercase">{session?.user?.username.substring(0,2)}</AvatarFallback>
                             </Avatar>
                             <div className="">
                                 <span className="text-sm line-clamp-1">{session?.user?.nickname}</span>
@@ -67,7 +70,7 @@ export const AsideMenu = () => {
                     </CardContent>
                 </Card>
                 <div className='relative flex items-center'>
-                    <Input type='text' placeholder='Pesquisar...' className='bg-input shadow-none shrink-0' />
+                    <Input type='text' placeholder='Pesquisar...' className='bg-input shadow-inner shrink-0' />
                     <button className='absolute right-2 text-primary'><Search /></button>
                 </div>
                 <nav className=''>
