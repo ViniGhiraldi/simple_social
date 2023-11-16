@@ -28,9 +28,7 @@ export const Feed = () => {
             {feed?.map((post, i) => (
                 <li key={i}>
                     <Post
-                        user={post.user}
-                        text={post.title}
-                        media={post.media}
+                        post={post}
                     />
                 </li>
             ))}

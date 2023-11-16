@@ -1,4 +1,4 @@
-import { NewPost } from "@/components/new-post";
+import { NewPost } from "@/components/new-post/new-post";
 import { PremiumCard } from "@/components/premium-card";
 import { getServerSession } from "next-auth";
 import { nextAuthOptions } from "../api/auth/[...nextauth]/route";
