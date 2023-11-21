@@ -4,46 +4,68 @@ import { Image2, Send, Plus } from "react-iconly";
 import { Card, CardHeader } from "../../ui/card";
 import { Textarea } from "../../ui/textarea";
 import { Button } from "../../ui/button";
-import { forwardRef } from "react";
+import { forwardRef, useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
 
-const LiButton = forwardRef<
-    HTMLButtonElement,
-    React.HTMLAttributes<HTMLButtonElement>
+const Label = forwardRef<
+    HTMLLabelElement,
+    React.LabelHTMLAttributes<HTMLLabelElement>
 >(({ className, children, ...props }, ref) => (
-    <button
+    <label
         ref={ref}
         className={cn(
-            'flex items-center gap-2 text-muted-foreground hover:scale-105 transition hover:text-primary',
+            'cursor-pointer flex items-center gap-2 text-muted-foreground hover:scale-105 transition hover:text-primary',
             className
         )}
         {...props}
     >
         {children}
-    </button>
+    </label>
 ))
 
 export const NewPostRoot = ({children}: {children?: React.ReactNode}) => {
+    const [file, setFile] = useState<File>();
+
+    console.log(file)
+
+    const handleFileSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { files } = e.currentTarget;
+
+        if(!files) return;
+
+        setFile(files[0]);
+    }
+
+    const image = useMemo(() => {
+        if(!file) return;
+        
+        return URL.createObjectURL(file);
+    }, [file])
+
     return (
         <Card className='overflow-hidden'>
             <CardHeader className='flex-row gap-2 p-4'>
                 {children}
-                <Textarea className='resize-none border-none shadow-none focus-visible:ring-0 text-base leading-4' placeholder='No que você está pensando?' />
+                <div className="flex-1 space-y-2">
+                    <Textarea className='flex-1 resize-none border-none shadow-none focus-visible:ring-0 text-base leading-4' placeholder='No que você está pensando?' />
+                    {image && <img src={image} alt="" className="w-72 max-h-72" />}
+                </div>
             </CardHeader>
             <div className='flex bg-secondary justify-between'>
                 <div className='px-4 py-2 flex flex-1'>
                     <ul className='flex gap-4'>
                         <li className=''>
-                            <LiButton>
+                            <input type="file" id="fileInput" className="hidden" onChange={handleFileSelected}/>
+                            <Label htmlFor="fileInput">
                                 <Image2 />
                                 <span>Mídia</span>
-                            </LiButton>
+                            </Label>
                         </li>
                         <li className=''>
-                            <LiButton>
+                            <Label>
                                 <Plus />
                                 <span>Link</span>
-                            </LiButton>
+                            </Label>
                         </li>
                     </ul>
                 </div>
