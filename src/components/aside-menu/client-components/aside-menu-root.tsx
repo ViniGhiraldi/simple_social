@@ -70,10 +70,6 @@ export const AsideMenuRoot = ({children}: {children?: React.ReactNode}) => {
                 </nav>
             </div>
             <div className='pt-2 bg-background'>
-                {/* <Button className="p-6 text-base w-full gap-6 justify-start rounded-none">
-                    <Setting filled />
-                    <span>Opções</span>
-                </Button> */}
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild className="w-full">
                         <Button className="w-full p-6 text-base gap-6 justify-start rounded-none">

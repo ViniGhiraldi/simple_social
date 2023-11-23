@@ -9,7 +9,7 @@ export const PostComment = ({data}: {data: IPostComment}) => {
         <>
             <CardContent className="px-4 py-2 flex gap-4">
                 <Avatar>
-                    <AvatarImage src={data.user.profilePicture} />
+                    <AvatarImage src={data.user.profilePicture?.url} />
                     <AvatarFallback className="uppercase">{data.user.username.substring(0, 2)}</AvatarFallback>
                 </Avatar>
                 <div className="flex-1">

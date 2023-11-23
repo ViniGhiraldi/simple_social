@@ -1,3 +1,4 @@
+import { IImage } from "./image";
 import { IPostComment } from "./post-comment";
 import { IPostUsersOptions } from "./post-users-options";
 import { IUsuario } from "./usuario";
@@ -6,7 +7,7 @@ export interface IUsuarioForPost extends Pick<IUsuario, 'username' | 'nickname' 
 
 export interface IPost{
     id: number;
-    media?: string;
+    media?: IImage[];
     title: string;
     userId: string;
     createdAt: Date;

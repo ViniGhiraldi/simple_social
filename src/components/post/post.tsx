@@ -83,16 +83,16 @@ export const Post = ({ post }: PostProps) => {
     return(
         <Card className='w-[32rem]'>
             <CardHeader className='flex-row gap-4 p-4'>
-                <PostHeader username={post.user.username} nickname={post.user.nickname} avatar={post.user.profilePicture}/>
+                <PostHeader username={post.user.username} nickname={post.user.nickname} avatar={post.user.profilePicture?.url}/>
             </CardHeader>
             <CardContent className='pb-2 px-4'>
                 <p className='line-clamp-3'>{post.title}</p>
             </CardContent>
-            {post.media && (
+            {post.media && post.media.map(media => (
                 <CardContent className='p-0'>
-                    <img src={post.media} alt={post.title} className='w-full max-h-[32rem]'/>
+                    <img src={media.url} alt={media.name} className='w-full max-h-[32rem]'/>
                 </CardContent>
-            )}
+            ))}
             <CardContent className='p-0'>
                 <PostOptions
                     liked={userOptions?.liked} 
@@ -111,7 +111,7 @@ export const Post = ({ post }: PostProps) => {
             
             <CardFooter className='p-4 gap-4'>
                 <PostNewComment
-                    avatar={session?.user?.profilePicture}
+                    avatar={session?.user?.profilePicture?.url}
                     username={session?.user?.username as string}
                     inputValue={newComment}
                     handleOnChange={setNewComment}

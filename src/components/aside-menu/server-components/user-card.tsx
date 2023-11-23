@@ -10,13 +10,13 @@ export const UserCard = async () => {
         <Card className='overflow-hidden shrink-0 bg-card text-card-foreground'>
             {session?.user?.banner && (
                 <CardHeader className="p-0">
-                    <img src={session?.user?.banner} className="aspect-quarter" draggable={false} />
+                    <img src={session?.user?.banner.url} className="aspect-quarter" draggable={false} />
                 </CardHeader>
             )}
             <CardContent data-banner={!!session?.user?.banner} className="flex justify-between items-start gap-2 px-2 py-2 data-[banner=true]:pt-0">
                 <div className="flex gap-2 items-start">
                     <Avatar data-banner={!!session?.user?.banner} className="data-[banner=true]:-translate-y-1/2">
-                        <AvatarImage src={session?.user?.profilePicture} />
+                        <AvatarImage src={session?.user?.profilePicture?.url} />
                         <AvatarFallback className="uppercase">{session?.user?.username.substring(0, 2)}</AvatarFallback>
                     </Avatar>
                     <div className="">

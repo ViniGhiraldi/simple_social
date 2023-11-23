@@ -7,7 +7,7 @@ export const UserAvatar = async () => {
 
     return (
         <Avatar>
-            <AvatarImage src={session?.user?.profilePicture} />
+            <AvatarImage src={session?.user?.profilePicture?.url} />
             <AvatarFallback className="uppercase">{session?.user?.username.substring(0, 2)}</AvatarFallback>
         </Avatar>
     )

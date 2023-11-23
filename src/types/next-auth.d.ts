@@ -1,3 +1,4 @@
+import { IImage } from "@/models/image";
 import NextAuth, { DefaultSession } from "next-auth"
 
 declare module "next-auth" {
@@ -5,9 +6,9 @@ declare module "next-auth" {
     username: string;
     nickname: string;
     email: string;
-    profilePicture?: string;
+    profilePicture?: IImage;
     description?: string;
-    banner?: string;
+    banner?: IImage;
     accessToken: string;
     refreshToken: string;
   }

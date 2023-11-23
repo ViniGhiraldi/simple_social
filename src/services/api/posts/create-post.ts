@@ -4,12 +4,17 @@ import { AxiosError } from "axios";
 
 interface ICreatePost{
     title: string;
-    media: string;
+    media?: File;
 }
 
 export const createPost = async ({title, media}: ICreatePost) => {
     try {
-        const { data } = await Axios.post<{data: IPost}>('/post', {title, media});
+        const form = new FormData();
+        form.append('title', title);
+        if(media) form.append('media', media);
+        
+
+        const { data } = await Axios.post<{data: IPost}>('/post', form);
         
         return data.data;
     } catch (error) {
