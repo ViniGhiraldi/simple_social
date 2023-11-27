@@ -14,7 +14,11 @@ export const createPost = async ({title, media}: ICreatePost) => {
         if(media) form.append('media', media);
         
 
-        const { data } = await Axios.post<{data: IPost}>('/post', form);
+        const { data } = await Axios.post<{data: IPost}>('/post', form, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          });
         
         return data.data;
     } catch (error) {
