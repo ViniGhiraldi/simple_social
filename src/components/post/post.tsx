@@ -26,21 +26,28 @@ interface PostProps{
 export const Post = ({ post }: PostProps) => {
     const { data: session } = useSession();
 
+    console.log(post)
+
     const [userOptions, setUserOptions] = useState<IPostUsersOptions>();
     const [newComment, setNewComment] = useState('');
     const [userComment, setUserComment] = useState<IPostComment[]>();
     const [countComments, setCountComments] = useState(post._count.postComments);
 
     const userDefaultInteraction = useMemo(() => {
-        const userInteraction = post.postUser.filter(interaction => {
+        const userInteraction = post.postUser?.filter(interaction => {
             if(interaction.userId === session?.user?.username) return interaction
         })
 
-        return userInteraction.length ? userInteraction[0] : undefined
+        if(userInteraction && userInteraction.length){
+            return userInteraction[0];
+        }
+
+        return undefined;
+
     }, [post, session])
 
     const countLikes = useMemo(() => {
-        const likes = post.postUser.filter(interaction => interaction.liked).length
+        const likes = post.postUser ? post.postUser.filter(interaction => interaction.liked).length : 0;
 
         if(userOptions?.liked){
             if(!userDefaultInteraction?.liked){
@@ -121,7 +128,7 @@ export const Post = ({ post }: PostProps) => {
             {(userComment || post._count.postComments > 0) && <Separator orientation='horizontal'/>}
             
             {userComment && userComment?.map((comment, i) => <PostComment data={comment} key={i}/>)}
-            {post._count.postComments > 0 && <PostComment data={post.postComments[0]}/>}
+            {post._count.postComments > 0 && post.postComments && <PostComment data={post.postComments[0]}/>}
 
             <Separator orientation='horizontal'/>
             

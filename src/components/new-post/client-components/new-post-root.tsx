@@ -7,6 +7,7 @@ import { Button } from "../../ui/button";
 import React, { forwardRef, useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
 import { createPost } from "@/services/api/posts/create-post";
+import { useNewPostContext } from "@/contexts/new-post-context";
 
 const Label = forwardRef<
     HTMLLabelElement,
@@ -27,6 +28,7 @@ const Label = forwardRef<
 export const NewPostRoot = ({children}: {children?: React.ReactNode}) => {
     const [title, setTitle] = useState<string>();
     const [media, setMedia] = useState<File>();
+    const { setNewPosts } = useNewPostContext();
     
 
     const handleFileSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,8 +45,6 @@ export const NewPostRoot = ({children}: {children?: React.ReactNode}) => {
         const formatedTitle = title?.trim();
 
         if(formatedTitle){
-            console.log(formatedTitle, media);
-
             const data = await createPost({title: formatedTitle, media});
 
             if(data instanceof Error) {
@@ -52,6 +52,7 @@ export const NewPostRoot = ({children}: {children?: React.ReactNode}) => {
             }else{
                 setTitle('');
                 setMedia(undefined);
+                setNewPosts(oldValue => oldValue ? [data, ...oldValue] : [data]);
             }
         }
     }

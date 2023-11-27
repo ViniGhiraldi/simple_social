@@ -5,10 +5,12 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { Post } from "./post/post";
 import { getFeed } from "@/services/api/posts/get-feed";
+import { useNewPostContext } from "@/contexts/new-post-context";
 
 export const Feed = () => {
     const { data: session } = useSession();
     const [feed, setFeed] = useState<IPost[] | null>(null);
+    const { newPosts } = useNewPostContext();
 
     useEffect(() => {
         if(session?.user){
@@ -22,6 +24,16 @@ export const Feed = () => {
             })
         }
     }, [session])
+
+    useEffect(() => {
+        if(newPosts){
+            setFeed(oldValue => oldValue ? [...newPosts, ...oldValue] : newPosts);
+        }
+    }, [newPosts])
+
+    useEffect(() => {
+        console.log(feed)
+    }, [feed])
 
     return(
         <ul className='flex flex-col items-center gap-8'>

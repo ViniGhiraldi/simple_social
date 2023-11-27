@@ -3,6 +3,7 @@
 import NextAuthSessionProvider from '@/providers/session-provider'
 import './globals.css'
 import { Roboto } from 'next/font/google'
+import { NewPostProvider } from '@/contexts/new-post-context'
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -14,7 +15,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="pt-BR">
       <body className={`${roboto.className}`}>
         <NextAuthSessionProvider>
-          {children}
+          <NewPostProvider>
+            {children}
+          </NewPostProvider>
         </NextAuthSessionProvider>
       </body>
     </html>
