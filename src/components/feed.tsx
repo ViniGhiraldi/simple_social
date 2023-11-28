@@ -31,10 +31,6 @@ export const Feed = () => {
         }
     }, [newPosts])
 
-    useEffect(() => {
-        console.log(feed)
-    }, [feed])
-
     return(
         <ul className='flex flex-col items-center gap-8'>
             {feed?.map((post, i) => (

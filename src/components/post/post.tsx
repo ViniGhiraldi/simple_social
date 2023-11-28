@@ -26,12 +26,11 @@ interface PostProps{
 export const Post = ({ post }: PostProps) => {
     const { data: session } = useSession();
 
-    console.log(post)
-
     const [userOptions, setUserOptions] = useState<IPostUsersOptions>();
     const [newComment, setNewComment] = useState('');
     const [userComment, setUserComment] = useState<IPostComment[]>();
     const [countComments, setCountComments] = useState(post._count.postComments);
+    const [imageIndex, setImageIndex] = useState(0);
 
     const userDefaultInteraction = useMemo(() => {
         const userInteraction = post.postUser?.filter(interaction => {
@@ -61,7 +60,6 @@ export const Post = ({ post }: PostProps) => {
 
         return likes;
     }, [post, userDefaultInteraction, userOptions])
-
 
     useEffect(() => {
         if(userDefaultInteraction) setUserOptions(userDefaultInteraction)
@@ -111,11 +109,19 @@ export const Post = ({ post }: PostProps) => {
             <CardContent className='pb-2 px-4'>
                 <p className='line-clamp-3'>{post.title}</p>
             </CardContent>
-            {post.media && post.media.map((media, i) => (
-                <CardContent className='p-0' key={i}>
-                    <img src={media.url} alt={media.name} className='w-full max-h-[32rem]'/>
+            {post.media && post.media.length > 0 && (
+                <CardContent className='p-0 relative flex flex-col items-center justify-center w-full h-[32rem]'>
+                    <img src={post.media[imageIndex].url} alt={post.media[imageIndex].name} className='w-full max-h-full absolute'/>
+                    {post.media.length > 1 && (
+                        <div className="absolute bottom-1 flex gap-1 bg-primary/50 hover:bg-primary/70 rounded-full p-1">
+                            {post.media.map((_, i) => (
+                                <button key={i} data-actived={imageIndex === i} className="w-3 h-3 rounded-full data-[actived=false]:bg-secondary/50 data-[actived=false]:hover:bg-secondary/90 data-[actived=true]:bg-primary" onClick={() => setImageIndex(i)}></button>
+                            ))}
+                        </div>
+                    )}
                 </CardContent>
-            ))}
+            )}
+            
             <CardContent className='p-0'>
                 <PostOptions
                     liked={userOptions?.liked} 

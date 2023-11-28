@@ -27,7 +27,7 @@ const Label = forwardRef<
 
 export const NewPostRoot = ({children}: {children?: React.ReactNode}) => {
     const [title, setTitle] = useState<string>();
-    const [media, setMedia] = useState<File>();
+    const [media, setMedia] = useState<FileList>();
     const { setNewPosts } = useNewPostContext();
     
 
@@ -36,7 +36,7 @@ export const NewPostRoot = ({children}: {children?: React.ReactNode}) => {
 
         if(!files) return;
 
-        setMedia(files[0]);
+        setMedia(files);
     }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -59,8 +59,18 @@ export const NewPostRoot = ({children}: {children?: React.ReactNode}) => {
 
     const imagePreview = useMemo(() => {
         if(!media) return;
+
+        const images = [];
         
-        return URL.createObjectURL(media);
+        for(let i = 0; i < media.length; i++){
+            const listImage = {
+                url: URL.createObjectURL(media.item(i) as File),
+                name: media.item(i)?.name
+            }
+            images.push(listImage);
+        }
+
+        return images;
     }, [media])
 
     return (
@@ -68,16 +78,20 @@ export const NewPostRoot = ({children}: {children?: React.ReactNode}) => {
             <Card className='overflow-hidden'>
                 <CardHeader className='flex-row gap-2 p-4'>
                     {children}
-                    <div className="flex-1 space-y-2">
+                    <div className="flex-1 space-y-2 overflow-hidden">
                         <Textarea value={title} onChange={e => setTitle(e.currentTarget.value)} className='flex-1 resize-none border-none shadow-none focus-visible:ring-0 text-base leading-4' placeholder='No que você está pensando?' />
-                        {imagePreview && <img src={imagePreview} alt={media?.name} className="w-72 max-h-72" />}
+                        {imagePreview && (
+                            <div className="flex gap-2 overflow-x-auto">
+                                {imagePreview.map((image, i) => <img src={image.url} key={i} alt={image.name} className="max-w-[10rem] max-h-[10rem]" />)}
+                            </div>
+                        )}
                     </div>
                 </CardHeader>
                 <div className='flex bg-secondary justify-between'>
                     <div className='px-4 py-2 flex flex-1'>
                         <ul className='flex gap-4'>
                             <li className=''>
-                                <input type="file" id="fileInput" className="hidden" onChange={handleFileSelected}/>
+                                <input type="file" id="fileInput" multiple className="hidden" onChange={handleFileSelected}/>
                                 <Label htmlFor="fileInput">
                                     <Image2 />
                                     <span>Mídia</span>

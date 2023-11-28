@@ -3,7 +3,12 @@ import { CardContent } from "@/components/ui/card"
 import { IPostComment } from "@/models/post-comment"
 
 export const PostComment = ({data}: {data: IPostComment}) => {
-    const date = new Date(data.createdAt);
+    const postDate = new Date(data.createdAt);
+    const postDateString = `${postDate.getDate()}/${postDate.getMonth() + 1}/${postDate.getFullYear()}`;
+    const postTimeString = `${postDate.getHours()}:${postDate.getMinutes()}`;
+    
+    const realTimeDate = new Date();
+    const nowDateString = `${realTimeDate.getDate()}/${realTimeDate.getMonth() + 1}/${realTimeDate.getFullYear()}`;
 
     return (
         <>
@@ -18,7 +23,7 @@ export const PostComment = ({data}: {data: IPostComment}) => {
                             <p className="font-medium">{data.user.nickname}</p>
                             <span className="text-muted-foreground text-xs leading-2 tracking-wider">@{data.user.username}</span>
                         </div>
-                        <span className="text-xs text-muted-foreground">{`${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} às ${date.getHours()}:${date.getMinutes()}`}</span>
+                        <span className="text-xs text-muted-foreground">{`${postDateString === nowDateString ? 'Hoje' : postDateString} às ${postTimeString}`}</span>
                     </div>
                     <span className="line-clamp-3 text-sm">{data.comment}</span>
                 </div>
