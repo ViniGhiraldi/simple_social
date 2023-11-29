@@ -1,11 +1,7 @@
 'use client'
 
-import { Send } from "react-iconly";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import { Separator } from "../ui/separator";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { IPost } from "@/models/post";
 import { useSession } from "next-auth/react";
@@ -31,6 +27,17 @@ export const Post = ({ post }: PostProps) => {
     const [userComment, setUserComment] = useState<IPostComment[]>();
     const [countComments, setCountComments] = useState(post._count.postComments);
     const [imageIndex, setImageIndex] = useState(0);
+    
+    const currentDate = new Date();
+    const currentDateString = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
+
+    const getCustomDate = useCallback((date: Date) => {
+        const postDate = new Date(date);
+        const postDateString = `${postDate.getDate()}/${postDate.getMonth() + 1}/${postDate.getFullYear()}`;
+        const postTimeString = `${postDate.getHours()}:${postDate.getMinutes()}`;
+
+        return `${postDateString === currentDateString ? 'Hoje' : postDateString} às ${postTimeString}`;
+    }, [currentDateString])
 
     const userDefaultInteraction = useMemo(() => {
         const userInteraction = post.postUser?.filter(interaction => {
@@ -103,15 +110,15 @@ export const Post = ({ post }: PostProps) => {
 
     return(
         <Card className='w-[32rem]'>
-            <CardHeader className='flex-row gap-4 p-4'>
-                <PostHeader username={post.user.username} nickname={post.user.nickname} avatar={post.user.profilePicture?.url}/>
+            <CardHeader className='p-4'>
+                <PostHeader user={post.user} date={getCustomDate(post.createdAt)}/>
             </CardHeader>
             <CardContent className='pb-2 px-4'>
                 <p className='line-clamp-3'>{post.title}</p>
             </CardContent>
             {post.media && post.media.length > 0 && (
-                <CardContent className='p-0 relative flex flex-col items-center justify-center w-full h-[32rem]'>
-                    <img src={post.media[imageIndex].url} alt={post.media[imageIndex].name} className='w-full max-h-full absolute'/>
+                <CardContent className='p-0 relative flex flex-col items-center justify-center w-full max-h-[32rem]'>
+                    <img src={post.media[imageIndex].url} alt={post.media[imageIndex].name} className=''/>
                     {post.media.length > 1 && (
                         <div className="absolute bottom-1 flex gap-1 bg-primary/50 hover:bg-primary/70 rounded-full p-1">
                             {post.media.map((_, i) => (
@@ -133,15 +140,26 @@ export const Post = ({ post }: PostProps) => {
             </CardContent>
             {(userComment || post._count.postComments > 0) && <Separator orientation='horizontal'/>}
             
-            {userComment && userComment?.map((comment, i) => <PostComment data={comment} key={i}/>)}
-            {post._count.postComments > 0 && post.postComments && <PostComment data={post.postComments[0]}/>}
+            {userComment && userComment?.map((comment, i) => (
+                <PostComment
+                    date={getCustomDate(comment.createdAt)}
+                    comment={comment.comment}
+                    user={comment.user}
+                    key={i}/>
+            ))}
+            {post._count.postComments > 0 && post.postComments && (
+                <PostComment 
+                    comment={post.postComments[0].comment}
+                    date={getCustomDate(post.postComments[0].createdAt)}
+                    user={post.postComments[0].user}
+                />
+            )}
 
             <Separator orientation='horizontal'/>
             
-            <CardFooter className='p-4 gap-4'>
+            <CardFooter className='p-4'>
                 <PostNewComment
-                    avatar={session?.user?.profilePicture?.url}
-                    username={session?.user?.username as string}
+                    user={{profilePicture: session?.user?.profilePicture, username: session?.user?.username as string}}
                     inputValue={newComment}
                     handleOnChange={setNewComment}
                     handleOnClick={handleComment}

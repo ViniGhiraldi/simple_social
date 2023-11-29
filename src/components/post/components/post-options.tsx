@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { IPostUsersOptions } from "@/models/post-users-options";
 import { forwardRef } from "react";
 import { Bookmark, Chat, Heart, Send } from "react-iconly";
 
@@ -18,10 +19,8 @@ const IconButton = forwardRef<
   </button>
 ))
 
-interface IPostOptions{
-    liked?: boolean;
+interface IPostOptions extends Pick<IPostUsersOptions, 'liked' | 'favorited'>{
     totalLikes: number;
-    favorited?: boolean;
     totalcomments: number;
     handleOnClick: (liked?: boolean, favorited?: boolean) => Promise<void>;
 }

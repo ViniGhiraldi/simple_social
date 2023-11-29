@@ -7,14 +7,18 @@ import { Post } from "./post/post";
 import { getFeed } from "@/services/api/posts/get-feed";
 import { useNewPostContext } from "@/contexts/new-post-context";
 
-export const Feed = () => {
+interface IFeed{
+    onlyfriends?: boolean;
+}
+
+export const Feed = ({onlyfriends}: IFeed) => {
     const { data: session } = useSession();
     const [feed, setFeed] = useState<IPost[] | null>(null);
     const { newPosts } = useNewPostContext();
 
     useEffect(() => {
         if(session?.user){
-            getFeed({username: session.user.username})
+            getFeed({username: session.user.username, onlyfriends})
             .then(data => {
                 if(data instanceof Error){
                     console.log(data.message);
@@ -23,7 +27,7 @@ export const Feed = () => {
                 }
             })
         }
-    }, [session])
+    }, [onlyfriends, session])
 
     useEffect(() => {
         if(newPosts){
