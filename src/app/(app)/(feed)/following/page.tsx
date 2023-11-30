@@ -1,5 +1,5 @@
 import { Feed } from "@/components/feed";
 
-export default async function Following() {
+export default function Following() {
   return <Feed onlyfriends={true}/>
 }

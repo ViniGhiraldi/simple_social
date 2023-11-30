@@ -1,10 +1,10 @@
 import { AsideMenuRoot } from "./client-components/aside-menu-root";
-import { UserCard } from "./server-components/user-card";
+import { AsideMenuUserCard } from "./server-components/aside-menu-user-card";
 
 export const AsideMenu = () => {
     return (
         <AsideMenuRoot>
-            <UserCard/>
+            <AsideMenuUserCard/>
         </AsideMenuRoot>
     );
 }

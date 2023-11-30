@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { getServerSession } from "next-auth"
 
-export const UserCard = async () => {
+export const AsideMenuUserCard = async () => {
     const session = await getServerSession(nextAuthOptions);
 
     return (
