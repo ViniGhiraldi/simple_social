@@ -2,6 +2,7 @@ import { Metadata } from "next"
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { nextAuthOptions } from "../api/auth/[...nextauth]/route";
+import Image from "next/image";
 
 export const metadata: Metadata = {
     title: 'Simple Social',
@@ -11,7 +12,18 @@ export const metadata: Metadata = {
 export default async function AuthLayout({ children }: { children: React.ReactNode }) {
     const session = await getServerSession(nextAuthOptions);
 
-    if(session) return redirect('/');
+    if (session) return redirect('/');
 
-    return <>{children}</>
+    return (
+        <div className="min-h-screen flex">
+            <div className="flex-1 bg-primary flex items-center justify-center">
+                <Image src='/white-logo.svg' alt='Simple Social logo' width={250} height={250} className='' />
+            </div>
+            <div className="flex-1 bg-secondary flex items-center justify-center p-6">
+                <div className="w-1/2 space-y-6">
+                    {children}
+                </div>
+            </div>
+        </div>
+    )
 }

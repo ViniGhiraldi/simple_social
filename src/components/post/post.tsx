@@ -118,7 +118,7 @@ export const Post = ({ post }: PostProps) => {
             </CardContent>
             {post.media && post.media.length > 0 && (
                 <CardContent className='p-0 relative flex flex-col items-center justify-center w-full max-h-[32rem]'>
-                    <img src={post.media[imageIndex].url} alt={post.media[imageIndex].name} className=''/>
+                    <img src={post.media[imageIndex].url} alt={post.media[imageIndex].name} className='max-h-[32rem]'/>
                     {post.media.length > 1 && (
                         <div className="absolute bottom-1 flex gap-1 bg-primary/50 hover:bg-primary/70 rounded-full p-1">
                             {post.media.map((_, i) => (

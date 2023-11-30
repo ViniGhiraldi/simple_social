@@ -7,4 +7,6 @@ export interface IUsuario{
     profilePicture?: IImage;
     banner?: IImage;
     description?: string;
+    createdAt?: Date;
+    updatedAt?: Date;
 }

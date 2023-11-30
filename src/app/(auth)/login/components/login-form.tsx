@@ -10,6 +10,7 @@ import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { setCookie } from "nookies";
 import { useEffect } from "react";
+import Link from "next/link";
 
 const formSchema = z.object({
     uniquekey: z.string(),
@@ -45,8 +46,6 @@ export const LoginForm = () => {
     })
 
     const handleSubmit = async (values: z.infer<typeof formSchema>) => {
-        console.log(values)
-
         const result = await signIn('credentials', {
             uniquekey: values.uniquekey,
             password: values.password,
@@ -69,7 +68,7 @@ export const LoginForm = () => {
                         <FormItem>
                             <FormLabel>Nome de Usuário ou E-mail</FormLabel>
                             <FormControl>
-                                <Input {...field}/>
+                                <Input {...field} className="bg-input"/>
                             </FormControl>
                             <FormMessage/>
                         </FormItem>
@@ -82,13 +81,16 @@ export const LoginForm = () => {
                         <FormItem>
                             <FormLabel>Senha</FormLabel>
                             <FormControl>
-                                <Input {...field}/>
+                                <Input {...field} className="bg-input"/>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
-                <Button type="submit">Entrar</Button>
+                <div className="flex justify-between items-center">
+                    <Button type="submit" className="text-base">Entrar</Button>
+                    <Link href='/register' className="text-sm text-primary underline">Registrar-se</Link>
+                </div>
             </form>
         </Form>
     )

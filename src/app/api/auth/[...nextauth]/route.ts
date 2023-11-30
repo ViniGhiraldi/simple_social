@@ -1,6 +1,6 @@
 import NextAuth, { NextAuthOptions, User } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
-import { Axios } from '@/lib/axios/axios';
+import { signIn } from '@/services/api/auth/sign-in';
 
 export const nextAuthOptions: NextAuthOptions = {
     providers: [
@@ -11,16 +11,16 @@ export const nextAuthOptions: NextAuthOptions = {
                 password: { label: 'Senha', type: 'password' }
             },
             async authorize(credentials) {
-                const response = await Axios.post('http://localhost:3333/signin', {
-                    uniquekey: credentials?.uniquekey,
-                    password: credentials?.password
+                const response = await signIn({
+                    uniquekey: credentials?.uniquekey as string,
+                    password: credentials?.password as string
                 })
 
-                if(response.status === 202 || response.status === 200){
-                    return response.data
+                if(response instanceof Error){
+                    return null;
                 }
 
-                return null;
+                return response as any;
             },
         })
     ],

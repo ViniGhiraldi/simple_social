@@ -11,6 +11,7 @@ import React, { useCallback } from "react";
 import { usePathname } from 'next/navigation';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../ui/dropdown-menu";
 import { signOut } from "next-auth/react";
+import { destroyCookie } from 'nookies';
 
 interface ButtonLinkProps {
     children?: React.ReactNode;
@@ -36,6 +37,12 @@ export const AsideMenuRoot = ({children}: {children?: React.ReactNode}) => {
     const pathCompare = useCallback((href: string) => {
         return pathname === href
     }, [pathname])
+
+    const handleSignOut = async () => {
+        destroyCookie(undefined, 'simplesocial.accessToken');
+        destroyCookie(undefined, 'simplesocial.refreshToken');
+        await signOut();
+    }
 
     return (
         <aside className='w-72 h-screen border-r flex flex-col justify-between'>
@@ -80,7 +87,7 @@ export const AsideMenuRoot = ({children}: {children?: React.ReactNode}) => {
                     <DropdownMenuContent className="w-60">
                         <DropdownMenuLabel>Opções</DropdownMenuLabel>
                         <DropdownMenuSeparator/>
-                        <DropdownMenuItem className="flex gap-6" onClick={async () => await signOut()}>
+                        <DropdownMenuItem className="flex gap-6" onClick={handleSignOut}>
                             <Logout/>
                             <span>Sair</span>
                         </DropdownMenuItem>

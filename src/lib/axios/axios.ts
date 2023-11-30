@@ -13,7 +13,7 @@ export const Axios = axios.create({
 
 if(accessToken) {
     Axios.defaults.headers['Authorization'] = `Bearer ${accessToken}`
-}
+}   
 
 Axios.interceptors.response.use(
     res => res,
