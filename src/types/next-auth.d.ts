@@ -1,14 +1,9 @@
 import { IImage } from "@/models/image";
+import { IUsuario } from "@/models/usuario";
 import NextAuth, { DefaultSession } from "next-auth"
 
 declare module "next-auth" {
-  interface User {
-    username: string;
-    nickname: string;
-    email: string;
-    profilePicture?: IImage;
-    description?: string;
-    banner?: IImage;
+  interface User extends IUsuario {
     accessToken: string;
     refreshToken: string;
   }

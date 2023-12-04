@@ -37,7 +37,11 @@ export const nextAuthOptions: NextAuthOptions = {
                     email: customUser.user.email,
                     profilePicture: customUser.user.profilePicture,
                     description: customUser.user.description,
-                    banner: customUser.user.banner
+                    banner: customUser.user.banner,
+                    followedUser: customUser.user.followedUser,
+                    followerUser: customUser.user.followerUser,
+                    posts:customUser.user.posts,
+                    _count: customUser.user._count
                 }
             }
 
