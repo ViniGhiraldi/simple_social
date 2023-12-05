@@ -2,7 +2,7 @@ import { IImage } from "./image";
 import { IPost } from "./post";
 import { IUsersFollows } from "./users-follows";
 
-export interface IPostForUsuario extends Pick<IPost, 'id' | 'title' | 'media' | 'createdAt'>{}
+export interface IPostForUsuario extends Pick<IPost, 'id' | 'title' | 'media' | 'createdAt' | 'userId'>{}
 
 export interface IUsuario {
     username: string;

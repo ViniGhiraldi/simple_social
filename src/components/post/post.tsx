@@ -14,18 +14,18 @@ import { PostComment } from "./components/post-comment";
 import { createComment } from "@/services/api/relations/post-user-comments/create-comment";
 import { IPostComment } from "@/models/post-comment";
 import { PostNewComment } from "./components/post-new-comment";
+import { IUsuario } from "@/models/usuario";
 
 interface PostProps{
-    post: IPost
+    post: IPost;
+    user: IUsuario;
 }
 
-export const Post = ({ post }: PostProps) => {
-    const { data: session } = useSession();
-
+export const Post = ({ post, user }: PostProps) => {
     const [userOptions, setUserOptions] = useState<IPostUsersOptions>();
     const [newComment, setNewComment] = useState('');
     const [userComment, setUserComment] = useState<IPostComment[]>();
-    const [countComments, setCountComments] = useState(post._count.postComments);
+    const [countComments, setCountComments] = useState(post._count?.postComments || 0);
     const [imageIndex, setImageIndex] = useState(0);
     
     const currentDate = new Date();
@@ -41,7 +41,7 @@ export const Post = ({ post }: PostProps) => {
 
     const userDefaultInteraction = useMemo(() => {
         const userInteraction = post.postUser?.filter(interaction => {
-            if(interaction.userId === session?.user?.username) return interaction
+            if(interaction.userId === user.username) return interaction
         })
 
         if(userInteraction && userInteraction.length){
@@ -50,7 +50,7 @@ export const Post = ({ post }: PostProps) => {
 
         return undefined;
 
-    }, [post, session])
+    }, [post, user])
 
     const countLikes = useMemo(() => {
         const likes = post.postUser ? post.postUser.filter(interaction => interaction.liked).length : 0;
@@ -138,7 +138,7 @@ export const Post = ({ post }: PostProps) => {
                     handleOnClick={handleInteraction}
                 />
             </CardContent>
-            {(userComment || post._count.postComments > 0) && <Separator orientation='horizontal'/>}
+            {(userComment || (post._count && post._count.postComments > 0)) && <Separator orientation='horizontal'/>}
             
             {userComment && userComment?.map((comment, i) => (
                 <PostComment
@@ -147,7 +147,7 @@ export const Post = ({ post }: PostProps) => {
                     user={comment.user}
                     key={i}/>
             ))}
-            {post._count.postComments > 0 && post.postComments && (
+            {(post._count && post._count.postComments > 0) && post.postComments && (
                 <PostComment 
                     comment={post.postComments[0].comment}
                     date={getCustomDate(post.postComments[0].createdAt)}
@@ -159,7 +159,7 @@ export const Post = ({ post }: PostProps) => {
             
             <CardFooter className='p-4'>
                 <PostNewComment
-                    user={{profilePicture: session?.user?.profilePicture, username: session?.user?.username as string}}
+                    user={{profilePicture: user?.profilePicture, username: user.username}}
                     inputValue={newComment}
                     handleOnChange={setNewComment}
                     handleOnClick={handleComment}

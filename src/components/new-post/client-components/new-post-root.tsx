@@ -29,7 +29,6 @@ export const NewPostRoot = ({children}: {children?: React.ReactNode}) => {
     const [title, setTitle] = useState<string>();
     const [media, setMedia] = useState<FileList>();
     const { setNewPosts } = useNewPostContext();
-    
 
     const handleFileSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { files } = e.currentTarget;
@@ -81,7 +80,7 @@ export const NewPostRoot = ({children}: {children?: React.ReactNode}) => {
                     <div className="flex-1 overflow-hidden space-y-2">
                         <Textarea value={title} onChange={e => setTitle(e.currentTarget.value)} className='flex-1 resize-none border-none shadow-none focus-visible:ring-0 text-base leading-4' placeholder='No que você está pensando?' />
                         {imagePreview && (
-                            <div className="flex gap-2 overflow-x-auto scrollbar-hide ">
+                            <div className="flex gap-2 overflow-x-auto scrollbar-hide">
                                 {imagePreview.map((image, i) => <img src={image.url} key={i} alt={image.name} className="max-w-[10rem] max-h-[10rem]" />)}
                             </div>
                         )}

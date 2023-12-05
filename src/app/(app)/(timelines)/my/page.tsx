@@ -3,6 +3,7 @@ import { SessionUserCard } from "@/components/session-user-card/session-user-car
 import { getServerSession } from "next-auth";
 import { IUsuario } from "@/models/usuario";
 import { Metadata } from "next";
+import { Post } from "@/components/post/post";
 
 export const metadata: Metadata = {
   title: 'Simple Social | My Profile',
@@ -13,8 +14,18 @@ export default async function My() {
   const session = await getServerSession(nextAuthOptions);
 
   return (
-    <div className="flex flex-col gap-6">
+    <>
       <SessionUserCard user={session?.user as IUsuario}/>
-    </div>
+      <ul className="flex flex-col items-center gap-8">
+        {session?.user?.posts?.map((post, i) => (
+          <li key={i}>
+            <Post
+              post={{...post, user: session?.user as IUsuario}}
+              user={session.user as IUsuario}
+            />
+          </li>
+        ))}
+      </ul>
+    </>
   )
 }

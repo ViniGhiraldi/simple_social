@@ -16,11 +16,11 @@ export const SessionUserCard = async ({user}: ISessionUserCard) => {
           </CardHeader>
         )}
         <CardContent data-banner={!!user?.banner} className="flex gap-6 data-[banner=false]:pt-6">
-          <Avatar className="data-[banner=true]:-translate-y-1/2 h-32 w-32 shadow-lg">
+          <Avatar data-banner={!!user?.banner} className="data-[banner=true]:-translate-y-1/2 h-32 w-32 shadow-lg">
             <AvatarImage src={user?.profilePicture?.url} />
             <AvatarFallback className="uppercase text-3xl">{user?.username.substring(0, 2)}</AvatarFallback>
           </Avatar>
-          <div>
+          <div data-banner={!!user?.banner} className="data-[banner=true]:mt-2">
             <div className="flex gap-4 items-center mb-2">
               <h1 className="text-2xl">{user?.nickname}</h1>
               <h2 className="text-muted-foreground">@{user?.username}</h2>

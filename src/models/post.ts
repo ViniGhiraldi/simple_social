@@ -14,7 +14,7 @@ export interface IPost{
     postUser?: IPostUsersOptions[];
     postComments?: IPostComment[];
     user: IUsuarioForPost;
-    _count: {
+    _count?: {
         postUser: number;
         postComments: number;
     }

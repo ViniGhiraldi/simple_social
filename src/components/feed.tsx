@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Post } from "./post/post";
 import { getFeed } from "@/services/api/posts/get-feed";
 import { useNewPostContext } from "@/contexts/new-post-context";
+import { IUsuario } from "@/models/usuario";
 
 interface IFeed{
     onlyfriends?: boolean;
@@ -41,6 +42,7 @@ export const Feed = ({onlyfriends}: IFeed) => {
                 <li key={i}>
                     <Post
                         post={post}
+                        user={session?.user as IUsuario}
                     />
                 </li>
             ))}
